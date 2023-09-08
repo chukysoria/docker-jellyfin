@@ -13,8 +13,8 @@ env:
   ARCH: arm32v7
   # Dinamic
   NOW:
-  EXT_RELEASE:
-  EXT_RELEASE_CLEAN:
+  EXT_RELEASE: 10.8.10
+  EXT_RELEASE_CLEAN: 
   
 
 jobs:
@@ -38,9 +38,9 @@ jobs:
        # run: |
        #   echo "EXT_RELEASE=$(curl -sX GET "https://api.github.com/repos/traefik/traefik/releases/latest" | awk '/tag_name/{print $4;exit}' FS='[""]')" >> "$GITHUB_ENV"
   
-      #- name: Sanite Release version
-      #  run: |
-      #    echo "EXT_RELEASE_CLEAN=$(echo '${{ env.EXT_RELEASE }}' | sed 's/[~,%@+;:/]//g')" >> "$GITHUB_ENV"
+      - name: Sanite Release version
+        run: |
+          echo "EXT_RELEASE_CLEAN=$(echo '${{ env.EXT_RELEASE }}' | sed 's/[~,%@+;:/]//g')" >> "$GITHUB_ENV"
   
       - name: Login to Github Container Repo
         uses: docker/login-action@v2
