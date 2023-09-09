@@ -18,14 +18,7 @@ RUN \
   DISTRO="$( awk -F'=' '/^ID=/{ print $NF }' /etc/os-release )" && \
   CODENAME="$( awk -F'=' '/^VERSION_CODENAME=/{ print $NF }' /etc/os-release )" && \
   curl -fsSL https://repo.jellyfin.org/ubuntu/jellyfin_team.gpg.key | gpg --dearmor -o /etc/apt/keyrings/jellyfin.gpg && \
-  echo " \
-  Types: deb \
-  URIs: https://repo.jellyfin.org/ubuntu \
-  Suites: jammy \
-  Components: main \
-  Architectures: armhf \
-  Signed-By: /etc/apt/keyrings/jellyfin.gpg \
-  " >> /etc/apt/sources.list.d/jellyfin.sources && \
+  echo 'deb [arch=armhf] https://repo.jellyfin.org/ubuntu jammy main' > /etc/apt/sources.list.d/jellyfin.list && \
   if [ -z ${JELLYFIN_RELEASE+x} ]; then \
     JELLYFIN_RELEASE=$(curl -sX GET https://repo.jellyfin.org/ubuntu/dists/jammy/main/binary-armhf/Packages |grep -A 7 -m 1 'Package: jellyfin-server' | awk -F ': ' '/Version/{print $2;exit}'); \
   fi && \
