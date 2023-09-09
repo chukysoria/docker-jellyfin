@@ -17,7 +17,7 @@ RUN \
   echo "**** install jellyfin *****" && \
   DISTRO="$( awk -F'=' '/^ID=/{ print $NF }' /etc/os-release )" && \
   CODENAME="$( awk -F'=' '/^VERSION_CODENAME=/{ print $NF }' /etc/os-release )" && \
-  curl -fsSL https://repo.jellyfin.org/ubuntu/jellyfin_team.gpg.key | gpg --dearmor -o /etc/apt/keyrings/jellyfin.gpg \
+  curl -fsSL https://repo.jellyfin.org/ubuntu/jellyfin_team.gpg.key | gpg --dearmor -o /etc/apt/keyrings/jellyfin.gpg && \
   echo " \
   Types: deb \
   URIs: https://repo.jellyfin.org/ubuntu \
