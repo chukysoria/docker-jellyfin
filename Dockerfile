@@ -41,5 +41,5 @@ RUN \
 COPY root/ / 
 
 # ports and volumes
-EXPOSE 8096 8920
+EXPOSE 8096 8920 7359/udp 1090/udp
 VOLUME /config
