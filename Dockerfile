@@ -18,8 +18,8 @@ RUN \
   echo "**** install jellyfin *****" && \
   curl -s https://repo.jellyfin.org/ubuntu/jellyfin_team.gpg.key | apt-key add - && \
   echo 'deb [arch=armhf] https://repo.jellyfin.org/ubuntu jammy main' > /etc/apt/sources.list.d/jellyfin.list && \
-  if [ -z ${JELLYFIN_RELEASE+x} ]; then \
-    JELLYFIN_RELEASE=$(curl -sX GET https://repo.jellyfin.org/ubuntu/dists/jammy/main/binary-armhf/Packages |grep -A 7 -m 1 'Package: jellyfin-server' | awk -F ': ' '/Version/{print $2;exit}'); \
+  if [ -z ${BUILD_EXT_RELEASE+x} ]; then \
+    BUILD_EXT_RELEASE=$(curl -sX GET https://repo.jellyfin.org/ubuntu/dists/jammy/main/binary-armhf/Packages |grep -A 7 -m 1 'Package: jellyfin-server' | awk -F ': ' '/Version/{print $2;exit}'); \
   fi && \
   apt-get update && \
   apt-get install -y --no-install-recommends \
