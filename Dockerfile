@@ -26,7 +26,7 @@ RUN \
     BUILD_ARCH=armhf; \
   fi && \
   echo $BUILD_ARCH && \
-  echo "deb [arch=$BUILD_ARCH] https://repo.jellyfin.org/ubuntu jammy main" > /etc/apt/sources.list.d/jellyfin.list && \
+  echo 'deb [arch=armhf] https://repo.jellyfin.org/ubuntu jammy main' > /etc/apt/sources.list.d/jellyfin.list && \
   cat /etc/apt/sources.list.d/jellyfin.list && \
   if [ -z ${BUILD_EXT_RELEASE+x} ]; then \
     BUILD_EXT_RELEASE=$(curl -sX GET https://repo.jellyfin.org/ubuntu/dists/jammy/main/binary-${BUILD_ARCH}/Packages |grep -A 7 -m 1 'Package: jellyfin-server' | awk -F ': ' '/Version/{print $2;exit}'); \
