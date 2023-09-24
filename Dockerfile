@@ -18,10 +18,14 @@ ENV NVIDIA_DRIVER_CAPABILITIES="compute,video,utility"
 RUN \
   echo "**** install jellyfin *****" && \
   curl -s https://repo.jellyfin.org/ubuntu/jellyfin_team.gpg.key | apt-key add - && \
-  if [ ${BUILD_ARCH} == "armv7" ]; then \
+  if [ "$BUILD_ARCH"=="x86_64" ]; then\
+    BUILD_ARCH=amd64; \
+  elif [ "$BUILD_ARCH"=="armv7" ]; then \
     BUILD_ARCH=armhf; \
   fi && \
-  echo 'deb [arch=${BUILD_ARCH}] https://repo.jellyfin.org/ubuntu jammy main' > /etc/apt/sources.list.d/jellyfin.list && \
+  echo $BUILD_ARCH && \
+  echo "deb [arch=$BUILD_ARCH] https://repo.jellyfin.org/ubuntu jammy main" > /etc/apt/sources.list.d/jellyfin.list && \
+  cat /etc/apt/sources.list.d/jellyfin.list && \
   if [ -z ${BUILD_EXT_RELEASE+x} ]; then \
     BUILD_EXT_RELEASE=$(curl -sX GET https://repo.jellyfin.org/ubuntu/dists/jammy/main/binary-${BUILD_ARCH}/Packages |grep -A 7 -m 1 'Package: jellyfin-server' | awk -F ': ' '/Version/{print $2;exit}'); \
   fi && \
