@@ -20,6 +20,8 @@ RUN \
   curl -s https://repo.jellyfin.org/ubuntu/jellyfin_team.gpg.key | apt-key add - && \
   if [ "$BUILD_ARCH"=="x86_64" ]; then\
     BUILD_ARCH=amd64; \
+  elif [ "$BUILD_ARCH"=="aarch64" ]; then \
+    BUILD_ARCH=arm64; \
   elif [ "$BUILD_ARCH"=="armv7" ]; then \
     BUILD_ARCH=armhf; \
   fi && \
