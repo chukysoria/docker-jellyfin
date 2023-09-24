@@ -1,12 +1,13 @@
 # syntax=docker/dockerfile:1
+ARG BUILD_FROM=ghcr.io/chukysoria/baseimage-ubuntu:jammy-v0.1.0
 
-FROM ghcr.io/chukysoria/baseimage-ubuntu:jammy
+FROM ${BUILD_FROM} 
 
 # set version label
 ARG BUILD_DATE
-ARG VERSION
-ARG JELLYFIN_RELEASE
-LABEL build_version="chukyserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
+ARG BUILD_VERSION
+ARG BUILD_EXT_RELEASE="10.8.10-1"
+LABEL build_version="Chukyserver.io version:- ${BUILD_VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="chukysoria"
 
 # environment settings
@@ -23,7 +24,7 @@ RUN \
   apt-get update && \
   apt-get install -y --no-install-recommends \
     at \
-    jellyfin-server=${JELLYFIN_RELEASE} \
+    jellyfin-server=${BUILD_EXT_RELEASE} \
     jellyfin-ffmpeg5 \
     jellyfin-web \
     libfontconfig1 \
