@@ -6,3 +6,4 @@ description: "[Jellyfin](https://github.com/jellyfin/jellyfin) is a Free Softwar
 ext_release: 10.8.11-1
 arch:
   - armv7
+  - x86_64
