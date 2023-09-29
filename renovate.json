@@ -28,11 +28,11 @@
     {
       "fileMatch": ["(^|/)Dockerfile$", "(^|/)config.yaml$"],
       "matchStrings": [
-        "ARG BUILD_EXT_RELEASE=[\"']?(?<currentValue>.+?)[\"']?\\s+",
-        "ext_release: (?<currentValue>.+)"
+        "ARG BUILD_EXT_RELEASE=[\"']?(?<currentValue>.+?)-.+?[\"']?\\s+",
+        "ext_release: (?<currentValue>.+)-"
       ],
       "datasourceTemplate": "github-releases",
-      "depNameTemplate": "duplicati/duplicati"
+      "depNameTemplate": "jellyfin/jellyfin"
     }
   ]
 }
