@@ -13,7 +13,6 @@
         "ARG BUILD_FROM=(?<depName>.*?):(?<currentValue>.*?)\\s+",
         "(aarch64|armv7|x86_64):\\s[\"']?(?<depName>.*?):(?<currentValue>.*?)[\"']?\\s"
       ],
-      "versioningTemplate": "ubuntu",
       "datasourceTemplate": "docker"
     },
     {
