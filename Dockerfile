@@ -20,8 +20,8 @@ RUN <<DOCKER_RUN
   mkdir -p /etc/apt/keyrings
   DISTRO="$( awk -F'=' '/^ID=/{ print $NF }' /etc/os-release )"
   CODENAME="$( awk -F'=' '/^VERSION_CODENAME=/{ print $NF }' /etc/os-release )"
-  curl -fsSL https://repo.jellyfin.org/${DISTRO}/jellyfin_team.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/jellyfin.gpg
-  cat <<EOF | sudo tee /etc/apt/sources.list.d/jellyfin.sources
+  curl -fsSL https://repo.jellyfin.org/${DISTRO}/jellyfin_team.gpg.key | gpg --dearmor -o /etc/apt/keyrings/jellyfin.gpg
+  cat <<EOF | tee /etc/apt/sources.list.d/jellyfin.sources
 Types: deb
 URIs: https://repo.jellyfin.org/${DISTRO}
 Suites: ${CODENAME}
