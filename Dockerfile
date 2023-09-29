@@ -37,6 +37,9 @@ EOF
     libfontconfig1=2.13.1-4.2ubuntu5 \
     libfreetype6=2.11.1+dfsg-1ubuntu0.2 \
     libssl3=3.0.2-0ubuntu1.10 \
+    libomxil-bellagio0 \
+    libomxil-bellagio-bin \
+    libraspberrypi0 \
     mesa-va-drivers=23.0.4-0ubuntu1~22.04.1 \
     xmlstarlet=1.6.1-2.1 && \
   echo "**** cleanup ****"
