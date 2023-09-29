@@ -31,14 +31,14 @@ Signed-By: /etc/apt/keyrings/jellyfin.gpg
 EOF
   apt-get update
   apt-get install -y --no-install-recommends \
-    at \
-    jellyfin \
-    jellyfin-ffmpeg5 \
-    libfontconfig1 \
-    libfreetype6 \
-    libssl3 \
-    mesa-va-drivers \
-    xmlstarlet && \
+    at=3.2.5-1ubuntu1 \
+    jellyfin=${BUILD_EXT_RELEASE} \
+    jellyfin-ffmpeg5=5.1.3-5-jammy \
+    libfontconfig1=2.13.1-4.2ubuntu5 \
+    libfreetype6=2.11.1+dfsg-1ubuntu0.2 \
+    libssl3=3.0.2-0ubuntu1.10 \
+    mesa-va-drivers=23.0.4-0ubuntu1~22.04.1 \
+    xmlstarlet=1.6.1-2.1 && \
   echo "**** cleanup ****"
   rm -rf \
     /tmp/* \
