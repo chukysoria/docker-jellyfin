@@ -1,41 +1,60 @@
 # syntax=docker/dockerfile:1
+ARG BUILD_FROM=ghcr.io/chukysoria/baseimage-ubuntu:jammy-v0.1.0
 
-FROM ghcr.io/chukysoria/baseimage-ubuntu:jammy
+FROM ${BUILD_FROM} 
 
 # set version label
+ARG BUILD_ARCH
 ARG BUILD_DATE
-ARG VERSION
-ARG JELLYFIN_RELEASE
-LABEL build_version="chukyserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
+ARG BUILD_VERSION
+ARG BUILD_EXT_RELEASE="10.8.11-1"
+LABEL build_version="Chukyserver.io version:- ${BUILD_VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="chukysoria"
 
 # environment settings
 ARG DEBIAN_FRONTEND="noninteractive"
 ENV NVIDIA_DRIVER_CAPABILITIES="compute,video,utility"
 
-RUN \
-  echo "**** install jellyfin *****" && \
-  curl -s https://repo.jellyfin.org/ubuntu/jellyfin_team.gpg.key | apt-key add - && \
-  echo 'deb [arch=armhf] https://repo.jellyfin.org/ubuntu jammy main' > /etc/apt/sources.list.d/jellyfin.list && \
-  if [ -z ${JELLYFIN_RELEASE+x} ]; then \
-    JELLYFIN_RELEASE=$(curl -sX GET https://repo.jellyfin.org/ubuntu/dists/jammy/main/binary-armhf/Packages |grep -A 7 -m 1 'Package: jellyfin-server' | awk -F ': ' '/Version/{print $2;exit}'); \
-  fi && \
-  apt-get update && \
+RUN <<DOCKER_RUN
+  echo "**** install jellyfin *****"
+  mkdir -p /etc/apt/keyrings
+  DISTRO="$( awk -F'=' '/^ID=/{ print $NF }' /etc/os-release )"
+  CODENAME="$( awk -F'=' '/^VERSION_CODENAME=/{ print $NF }' /etc/os-release )"
+  curl -fsSL https://repo.jellyfin.org/${DISTRO}/jellyfin_team.gpg.key | gpg --dearmor -o /etc/apt/keyrings/jellyfin.gpg
+  cat <<EOF | tee /etc/apt/sources.list.d/jellyfin.sources
+Types: deb
+URIs: https://repo.jellyfin.org/${DISTRO}
+Suites: ${CODENAME}
+Components: main
+Architectures: $( dpkg --print-architecture )
+Signed-By: /etc/apt/keyrings/jellyfin.gpg
+EOF
+  apt-get update
   apt-get install -y --no-install-recommends \
-    at \
-    jellyfin-server=${JELLYFIN_RELEASE} \
-    jellyfin-ffmpeg5 \
-    jellyfin-web \
-    libfontconfig1 \
-    libfreetype6 \
-    libssl3 \
-    mesa-va-drivers \
-    xmlstarlet && \
-  echo "**** cleanup ****" && \
+    at=3.2.5-1ubuntu1 \
+    jellyfin=${BUILD_EXT_RELEASE} \
+    jellyfin-ffmpeg5=5.1.3-5-jammy \
+    libfontconfig1=2.13.1-4.2ubuntu5 \
+    libfreetype6=2.11.1+dfsg-1ubuntu0.2 \
+    libssl3=3.0.2-0ubuntu1.10 \
+    xmlstarlet=1.6.1-2.1 && \
+  if [ "${BUILD_ARCH}" = "aarch64" ] || [ "${BUILD_ARCH}" = "armv7" ]; then
+    echo "**** Instaling ARM packages ****"
+    apt-get install -y --no-install-recommends \
+      libomxil-bellagio0=0.9.3-7ubuntu1 \
+      libomxil-bellagio-bin=0.9.3-7ubuntu1 \
+      libraspberrypi0=0~20220324+gitc4fd1b8-0ubuntu1~22.04.1; \
+  else \
+    echo "**** Instaling AMD64 packages ****"
+    apt-get install -y --no-install-recommends \
+      mesa-va-drivers=23.0.4-0ubuntu1~22.04.1; \
+  fi && \
+  echo "**** cleanup ****"
   rm -rf \
     /tmp/* \
     /var/lib/apt/lists/* \
     /var/tmp/*
+DOCKER_RUN
 
 # add local files
 COPY root/ / 
