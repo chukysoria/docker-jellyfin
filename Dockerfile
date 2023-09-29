@@ -37,14 +37,17 @@ EOF
     libfontconfig1=2.13.1-4.2ubuntu5 \
     libfreetype6=2.11.1+dfsg-1ubuntu0.2 \
     libssl3=3.0.2-0ubuntu1.10 \
-    mesa-va-drivers=23.0.4-0ubuntu1~22.04.1 \
     xmlstarlet=1.6.1-2.1 && \
-  if [ "${BUILD_ARCH}" = "aarch64" ] | [ "${BUILD_ARCH}" = "armv7" ]; then
+  if [ "${BUILD_ARCH}" = "aarch64" ] || [ "${BUILD_ARCH}" = "armv7" ]; then
     echo "**** Instaling ARM packages ****"
     apt-get install -y --no-install-recommends \
       libomxil-bellagio0=0.9.3-7ubuntu1 \
       libomxil-bellagio-bin=0.9.3-7ubuntu1 \
       libraspberrypi0=0~20220324+gitc4fd1b8-0ubuntu1~22.04.1; \
+  else \
+    echo "**** Instaling AMD64 packages ****"
+    apt-get install -y --no-install-recommends \
+      mesa-va-drivers=23.0.4-0ubuntu1~22.04.1; \
   fi && \
   echo "**** cleanup ****"
   rm -rf \
