@@ -35,5 +35,11 @@
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "jellyfin/jellyfin"
     }
+  ],
+  "packageRules": [
+    {
+      "matchPackageNames": ["jellyfin/jellyfin"],
+      "extractVersion": "^v(?<version>.*)$"
+    }
   ]
 }
