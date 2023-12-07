@@ -36,10 +36,6 @@ RUN \
   apt-get install -y --no-install-recommends \
     at=3.2.5-1ubuntu1 \
     jellyfin=${BUILD_EXT_RELEASE} \
-    jellyfin-ffmpeg5 \
-    libfontconfig1=2.13.1-4.2ubuntu5 \
-    libfreetype6 \
-    libssl3 \
     xmlstarlet=1.6.1-2.1 && \
   if [ "${BUILD_ARCH}" = "aarch64" ] || [ "${BUILD_ARCH}" = "armv7" ]; then \
     echo "**** Instaling ARM packages ****"  && \
