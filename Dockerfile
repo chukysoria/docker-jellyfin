@@ -42,11 +42,13 @@ RUN \
     apt-get install -y --no-install-recommends \
       libomxil-bellagio0=0.9.3-7ubuntu1 \
       libomxil-bellagio-bin=0.9.3-7ubuntu1 \
-      libraspberrypi0=0~20220324+gitc4fd1b8-0ubuntu1~22.04.1; \
+      libraspberrypi0=0~20220324+gitc4fd1b8-0ubuntu1~22.04.1 \
+      ; \
   else \
     echo "**** Instaling AMD64 packages ****"  && \
     apt-get install -y --no-install-recommends \
-      mesa-va-drivers=23.0.4-0ubuntu1~22.04.1; \
+      mesa-va-drivers=23.2.1-1ubuntu3.1~22.04.2 \
+      ; \
   fi && \
   echo "**** cleanup ****"  && \
   rm -rf \
