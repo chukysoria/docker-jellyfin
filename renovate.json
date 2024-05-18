@@ -9,7 +9,8 @@
   "packageRules": [
     {
       "matchPackageNames": ["jellyfin/jellyfin"],
-      "extractVersion": "^v(?<version>.*)$"
+      "extractVersion": "^v(?<version>.*)$",
+      "replacementNameTemplate": "{{{packageName}}}+ubu2204"
     }
   ]
 }
