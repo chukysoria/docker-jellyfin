@@ -3,14 +3,24 @@
   "extends": [
     "local>chukysoria/renovate-config",
     "local>chukysoria/renovate-config:docker-build",
-    "local>chukysoria/renovate-config:os-package(ubuntu_22_04)",
-    "local>chukysoria/renovate-config:ext-release(github-releases,jellyfin/jellyfin)"
+    "local>chukysoria/renovate-config:os-package(ubuntu_22_04)"
+  ],
+  "customManagers": [
+      {
+        "fileMatch": ["(^|/)Dockerfile$", "(^|/)config.yaml$"],
+        "matchStrings": [
+          "ARG BUILD_EXT_RELEASE=[\"']?(?<currentValue>.+?)\+ubu2204[\"']?\\s+",
+          "ext_release: (?<currentValue>.+)\+ubu2204\\s+"
+        ],
+        "versioningTemplate": "loose",
+        "datasourceTemplate": "github-releases",
+        "depNameTemplate": "jellyfin/jellyfin"
+      }
   ],
   "packageRules": [
     {
       "matchPackageNames": ["jellyfin/jellyfin"],
-      "extractVersion": "^v(?<version>.*)$",
-      "replacementNameTemplate": "{{{packageName}}}+ubu2204"
+      "extractVersion": "^v(?<version>.*)$"
     }
   ]
 }
