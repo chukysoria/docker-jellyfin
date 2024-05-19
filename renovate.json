@@ -9,8 +9,8 @@
       {
         "fileMatch": ["(^|/)Dockerfile$", "(^|/)config.yaml$"],
         "matchStrings": [
-          "ARG BUILD_EXT_RELEASE=[\"']?(?<currentValue>.+?)\+ubu2204[\"']?\\s+",
-          "ext_release: (?<currentValue>.+)\+ubu2204\\s+"
+          "ARG BUILD_EXT_RELEASE=[\"']?(?<currentValue>.+?)\\+ubu2204[\"']?\\s+",
+          "ext_release: (?<currentValue>.+)\\+ubu2204\\s+"
         ],
         "versioningTemplate": "loose",
         "datasourceTemplate": "github-releases",
