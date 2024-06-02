@@ -1,12 +1,12 @@
 # syntax=docker/dockerfile:1
-ARG BUILD_FROM=ghcr.io/chukysoria/baseimage-ubuntu:v0.2.24-jammy
+ARG BUILD_FROM=ghcr.io/chukysoria/baseimage-ubuntu:v0.3.1-noble
 FROM ${BUILD_FROM} 
 
 # set version label
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_VERSION
-ARG BUILD_EXT_RELEASE="10.9.4+ubu2204"
+ARG BUILD_EXT_RELEASE="10.9.4+ubu2404"
 LABEL build_version="Chukyserver.io version:- ${BUILD_VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="chukysoria"
 
@@ -34,14 +34,14 @@ RUN \
   echo "**** Instaling common packages ****"  && \
   apt-get update && \
   apt-get install -y --no-install-recommends \
-    at=3.2.5-1ubuntu1 \
+    at=3.2.5-2.1ubuntu3 \
     jellyfin=${BUILD_EXT_RELEASE} \
-    xmlstarlet=1.6.1-2.1 && \
+    xmlstarlet=1.6.1-4 && \
   if [ "${BUILD_ARCH}" = "aarch64" ] || [ "${BUILD_ARCH}" = "armv7" ]; then \
     echo "**** Instaling ARM packages ****"  && \
     apt-get install -y --no-install-recommends \
-      libomxil-bellagio0=0.9.3-7ubuntu1 \
-      libomxil-bellagio-bin=0.9.3-7ubuntu1 \
+      libomxil-bellagio0=0.9.3-8ubuntu2 \
+      libomxil-bellagio-bin=0.9.3-8ubuntu2 \
       libraspberrypi0 \
       ; \
   else \
