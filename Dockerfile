@@ -57,7 +57,7 @@ RUN \
     /var/tmp/*
 
 # add local files
-COPY root/ / 
+COPY root/ /
 
 # ports and volumes
 EXPOSE 8096 8920 7359/udp 1090/udp

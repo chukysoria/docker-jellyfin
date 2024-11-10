@@ -41,7 +41,7 @@ Find us at:
 
 [Jellyfin](https://github.com/jellyfin/jellyfin) is a Free Software Media System that puts you in control of managing and streaming your media. It is an alternative to the proprietary Emby and Plex, to provide media from a dedicated server to end-user devices via multiple apps. Jellyfin is descended from Emby's 3.5.2 release and ported to the .NET Core framework to enable full cross-platform support. There are no strings attached, no premium licenses or features, and no hidden agendas: just a team who want to build something better and work together to achieve it.
 
-[![jellyfin](https://raw.githubusercontent.com/jellyfin/jellyfin-ux/master/branding/SVG/banner-logo-solid.svg?sanitize=true)](https://github.com/jellyfin/jellyfin)
+[![jellyfin](https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/jellyfin-logo.png)](https://github.com/jellyfin/jellyfin)
 
 ## Supported Architectures
 
@@ -144,9 +144,9 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Etc/UTC
-      - JELLYFIN_PublishedServerUrl=192.168.0.5 #optional
+      - JELLYFIN_PublishedServerUrl=http://192.168.0.5 #optional
     volumes:
-      - /path/to/library:/config
+      - /path/to/jellyfin/library:/config
       - /path/to/tvseries:/data/tvshows
       - /path/to/movies:/data/movies
     ports:
@@ -165,12 +165,12 @@ docker run -d \
   -e PUID=1000 \
   -e PGID=1000 \
   -e TZ=Etc/UTC \
-  -e JELLYFIN_PublishedServerUrl=192.168.0.5 `#optional` \
+  -e JELLYFIN_PublishedServerUrl=http://192.168.0.5 `#optional` \
   -p 8096:8096 \
   -p 8920:8920 `#optional` \
   -p 7359:7359/udp `#optional` \
   -p 1900:1900/udp `#optional` \
-  -v /path/to/library:/config \
+  -v /path/to/jellyfin/library:/config \
   -v /path/to/tvseries:/data/tvshows \
   -v /path/to/movies:/data/movies \
   --restart unless-stopped \
@@ -190,7 +190,7 @@ Containers are configured using parameters passed at runtime (such as those abov
 | `-e PUID=1000` | for UserID - see below for explanation |
 | `-e PGID=1000` | for GroupID - see below for explanation |
 | `-e TZ=Etc/UTC` | specify a timezone to use, see this [list](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List). |
-| `-e JELLYFIN_PublishedServerUrl=192.168.0.5` | Set the autodiscovery response domain or IP address. |
+| `-e JELLYFIN_PublishedServerUrl=http://192.168.0.5` | Set the autodiscovery response domain or IP address, include http(s)://. |
 | `-v /config` | Jellyfin data storage location. *This can grow very large, 50gb+ is likely for a large collection.* |
 | `-v /data/tvshows` | Media goes here. Add as many as needed e.g. `/data/movies`, `/data/tv`, etc. |
 | `-v /data/movies` | Media goes here. Add as many as needed e.g. `/data/movies`, `/data/tv`, etc. |
@@ -346,7 +346,8 @@ Below are the instructions for updating containers:
 
 ### Image Update Notifications - Diun (Docker Image Update Notifier)
 
-**tip**: We recommend [Diun](https://crazymax.dev/diun/) for update notifications. Other tools that automatically update containers unattended are not recommended or supported.
+>[!TIP]
+>We recommend [Diun](https://crazymax.dev/diun/) for update notifications. Other tools that automatically update containers unattended are not recommended or supported.
 
 ## Building locally
 
@@ -371,6 +372,8 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **06.10.24:** - Fix fontconfig cache path.
+* **13.08.24:** - Rebase to Ubuntu Noble.
 * **01.05.24:** - Increase verbosity of device permissions fixing.
 * **12.02.24:** - Use universal hardware acceleration blurb.
 * **12.09.23:** - Take ownership of plugin directories.
