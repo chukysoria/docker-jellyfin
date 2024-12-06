@@ -6,20 +6,26 @@
     "local>chukysoria/renovate-config:os-package(ubuntu_24_04)"
   ],
   "customManagers": [
-      {
-        "fileMatch": ["(^|/)Dockerfile$", "(^|/)config.yaml$"],
-        "matchStrings": [
-          "ARG BUILD_EXT_RELEASE=[\"']?(?<currentValue>.+?)\\+ubu2404[\"']?\\s+",
-          "ext_release: (?<currentValue>.+)\\+ubu2404\\s+"
-        ],
-        "versioningTemplate": "loose",
-        "datasourceTemplate": "github-releases",
-        "depNameTemplate": "jellyfin/jellyfin"
-      }
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "(^|/)Dockerfile$",
+        "(^|/)config.yaml$"
+      ],
+      "matchStrings": [
+        "ARG BUILD_EXT_RELEASE=[\"']?(?<currentValue>.+?)\\+ubu2404[\"']?\\s+",
+        "ext_release: (?<currentValue>.+)\\+ubu2404\\s+"
+      ],
+      "versioningTemplate": "loose",
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "jellyfin/jellyfin"
+    }
   ],
   "packageRules": [
     {
-      "matchPackageNames": ["jellyfin/jellyfin"],
+      "matchPackageNames": [
+        "jellyfin/jellyfin"
+      ],
       "extractVersion": "^v(?<version>.*)$"
     }
   ]
