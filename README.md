@@ -28,7 +28,7 @@ Find us at:
 
 # [linuxserver/jellyfin](https://github.com/linuxserver/docker-jellyfin)
 
-[![Scarf.io pulls](https://scarf.sh/installs-badge/linuxserver-ci/linuxserver%2Fjellyfin?color=94398d&label-color=555555&logo-color=ffffff&style=for-the-badge&package-type=docker)](https://scarf.sh/gateway/linuxserver-ci/docker/linuxserver%2Fjellyfin)
+[![Scarf.io pulls](https://scarf.sh/installs-badge/linuxserver-ci/linuxserver%2Fjellyfin?color=94398d&label-color=555555&logo-color=ffffff&style=for-the-badge&package-type=docker)](https://scarf.sh)
 [![GitHub Stars](https://img.shields.io/github/stars/linuxserver/docker-jellyfin.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/linuxserver/docker-jellyfin)
 [![GitHub Release](https://img.shields.io/github/release/linuxserver/docker-jellyfin.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/linuxserver/docker-jellyfin/releases)
 [![GitHub Package Repository](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=linuxserver.io&message=GitHub%20Package&logo=github)](https://github.com/linuxserver/docker-jellyfin/packages)
@@ -41,7 +41,7 @@ Find us at:
 
 [Jellyfin](https://github.com/jellyfin/jellyfin) is a Free Software Media System that puts you in control of managing and streaming your media. It is an alternative to the proprietary Emby and Plex, to provide media from a dedicated server to end-user devices via multiple apps. Jellyfin is descended from Emby's 3.5.2 release and ported to the .NET Core framework to enable full cross-platform support. There are no strings attached, no premium licenses or features, and no hidden agendas: just a team who want to build something better and work together to achieve it.
 
-[![jellyfin](https://raw.githubusercontent.com/jellyfin/jellyfin-ux/master/branding/SVG/banner-logo-solid.svg?sanitize=true)](https://github.com/jellyfin/jellyfin)
+[![jellyfin](https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/jellyfin-logo.png)](https://github.com/jellyfin/jellyfin)
 
 ## Supported Architectures
 
@@ -72,29 +72,18 @@ Webui can be found at `http://<your-ip>:8096`
 
 More information can be found on the official documentation [here](https://jellyfin.org/docs/general/quick-start.html).
 
-## Hardware Acceleration
+### Hardware Acceleration Enhancements
+
+This section lists the enhancements we have made for hardware acceleration in this image specifically.
 
 ### Intel
-
-Hardware acceleration users for Intel Quicksync will need to mount their /dev/dri video device inside of the container by passing the following command when running or creating the container:
-
-`--device=/dev/dri:/dev/dri`
-
-We will automatically ensure the abc user inside of the container has the proper permissions to access this device.
 
 To enable the OpenCL based DV, HDR10 and HLG tone-mapping, please refer to the OpenCL-Intel mod from here:
 
 https://mods.linuxserver.io/?mod=jellyfin
 
-### Nvidia
 
-Hardware acceleration users for Nvidia will need to install the container runtime provided by Nvidia on their host, instructions can be found here:
-
-https://github.com/NVIDIA/nvidia-docker
-
-We automatically add the necessary environment variable that will utilise all the features available on a GPU on the host. Once nvidia-docker is installed on your host you will need to re/create the docker container with the nvidia container runtime `--runtime=nvidia` and add an environment variable `-e NVIDIA_VISIBLE_DEVICES=all` (can also be set to a specific gpu's UUID, this can be discovered by running `nvidia-smi --query-gpu=gpu_name,gpu_uuid --format=csv` ). NVIDIA automatically mounts the GPU and drivers from your host into the jellyfin docker container.
-
-### OpenMAX (Raspberry Pi)
+#### OpenMAX (Raspberry Pi)
 
 Hardware acceleration users for Raspberry Pi MMAL/OpenMAX will need to mount their `/dev/vcsm` and `/dev/vchiq` video devices inside of the container and their system OpenMax libs by passing the following options when running or creating the container:
 
@@ -104,7 +93,7 @@ Hardware acceleration users for Raspberry Pi MMAL/OpenMAX will need to mount the
 -v /opt/vc/lib:/opt/vc/lib
 ```
 
-### V4L2 (Raspberry Pi)
+#### V4L2 (Raspberry Pi)
 
 Hardware acceleration users for Raspberry Pi V4L2 will need to mount their `/dev/video1X` devices inside of the container by passing the following options when running or creating the container:
 
@@ -114,6 +103,31 @@ Hardware acceleration users for Raspberry Pi V4L2 will need to mount their `/dev
 --device=/dev/video12:/dev/video12
 ```
 
+### Hardware Acceleration
+
+Many desktop applications need access to a GPU to function properly and even some Desktop Environments have compositor effects that will not function without a GPU. However this is not a hard requirement and all base images will function without a video device mounted into the container.
+
+#### Intel/ATI/AMD
+
+To leverage hardware acceleration you will need to mount /dev/dri video device inside of the container.
+
+```text
+--device=/dev/dri:/dev/dri
+```
+
+We will automatically ensure the abc user inside of the container has the proper permissions to access this device.
+
+#### Nvidia
+
+Hardware acceleration users for Nvidia will need to install the container runtime provided by Nvidia on their host, instructions can be found here:
+https://github.com/NVIDIA/nvidia-container-toolkit
+
+We automatically add the necessary environment variable that will utilise all the features available on a GPU on the host. Once nvidia-container-toolkit is installed on your host you will need to re/create the docker container with the nvidia container runtime `--runtime=nvidia` and add an environment variable `-e NVIDIA_VISIBLE_DEVICES=all` (can also be set to a specific gpu's UUID, this can be discovered by running `nvidia-smi --query-gpu=gpu_name,gpu_uuid --format=csv` ). NVIDIA automatically mounts the GPU and drivers from your host into the container.
+
+#### Arm Devices
+
+Best effort is made to install tools to allow mounting in /dev/dri on Arm devices. In most cases if /dev/dri exists on the host it should just work. If running a Raspberry Pi 4 be sure to enable `dtoverlay=vc4-fkms-v3d` in your usercfg.txt.
+
 ## Usage
 
 To help you get started creating a container from this image you can either use docker-compose or the docker cli.
@@ -122,7 +136,6 @@ To help you get started creating a container from this image you can either use 
 
 ```yaml
 ---
-version: "2.1"
 services:
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
@@ -131,9 +144,9 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Etc/UTC
-      - JELLYFIN_PublishedServerUrl=192.168.0.5 #optional
+      - JELLYFIN_PublishedServerUrl=http://192.168.0.5 #optional
     volumes:
-      - /path/to/library:/config
+      - /path/to/jellyfin/library:/config
       - /path/to/tvseries:/data/tvshows
       - /path/to/movies:/data/movies
     ports:
@@ -152,12 +165,12 @@ docker run -d \
   -e PUID=1000 \
   -e PGID=1000 \
   -e TZ=Etc/UTC \
-  -e JELLYFIN_PublishedServerUrl=192.168.0.5 `#optional` \
+  -e JELLYFIN_PublishedServerUrl=http://192.168.0.5 `#optional` \
   -p 8096:8096 \
   -p 8920:8920 `#optional` \
   -p 7359:7359/udp `#optional` \
   -p 1900:1900/udp `#optional` \
-  -v /path/to/library:/config \
+  -v /path/to/jellyfin/library:/config \
   -v /path/to/tvseries:/data/tvshows \
   -v /path/to/movies:/data/movies \
   --restart unless-stopped \
@@ -177,7 +190,7 @@ Containers are configured using parameters passed at runtime (such as those abov
 | `-e PUID=1000` | for UserID - see below for explanation |
 | `-e PGID=1000` | for GroupID - see below for explanation |
 | `-e TZ=Etc/UTC` | specify a timezone to use, see this [list](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List). |
-| `-e JELLYFIN_PublishedServerUrl=192.168.0.5` | Set the autodiscovery response domain or IP address. |
+| `-e JELLYFIN_PublishedServerUrl=http://192.168.0.5` | Set the autodiscovery response domain or IP address, include http(s)://. |
 | `-v /config` | Jellyfin data storage location. *This can grow very large, 50gb+ is likely for a large collection.* |
 | `-v /data/tvshows` | Media goes here. Add as many as needed e.g. `/data/movies`, `/data/tv`, etc. |
 | `-v /data/movies` | Media goes here. Add as many as needed e.g. `/data/movies`, `/data/tv`, etc. |
@@ -266,7 +279,7 @@ We publish various [Docker Mods](https://github.com/linuxserver/docker-mods) to 
 
 ## Updating Info
 
-Most of our images are static, versioned, and require an image update and container recreation to update the app inside. With some exceptions (ie. nextcloud, plex), we do not recommend or support updating apps inside the container. Please consult the [Application Setup](#application-setup) section above to see if it is recommended for the image.
+Most of our images are static, versioned, and require an image update and container recreation to update the app inside. With some exceptions (noted in the relevant readme.md), we do not recommend or support updating apps inside the container. Please consult the [Application Setup](#application-setup) section above to see if it is recommended for the image.
 
 Below are the instructions for updating containers:
 
@@ -331,24 +344,10 @@ Below are the instructions for updating containers:
     docker image prune
     ```
 
-### Via Watchtower auto-updater (only use if you don't remember the original parameters)
-
-* Pull the latest image at its tag and replace it with the same env variables in one run:
-
-    ```bash
-    docker run --rm \
-      -v /var/run/docker.sock:/var/run/docker.sock \
-      containrrr/watchtower \
-      --run-once jellyfin
-    ```
-
-* You can also remove the old dangling images: `docker image prune`
-
-**warning**: We do not endorse the use of Watchtower as a solution to automated updates of existing Docker containers. In fact we generally discourage automated updates. However, this is a useful tool for one-time manual updates of containers where you have forgotten the original parameters. In the long term, we highly recommend using [Docker Compose](https://docs.linuxserver.io/general/docker-compose).
-
 ### Image Update Notifications - Diun (Docker Image Update Notifier)
 
-**tip**: We recommend [Diun](https://crazymax.dev/diun/) for update notifications. Other tools that automatically update containers unattended are not recommended or supported.
+>[!TIP]
+>We recommend [Diun](https://crazymax.dev/diun/) for update notifications. Other tools that automatically update containers unattended are not recommended or supported.
 
 ## Building locally
 
@@ -373,6 +372,10 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **06.10.24:** - Fix fontconfig cache path.
+* **13.08.24:** - Rebase to Ubuntu Noble.
+* **01.05.24:** - Increase verbosity of device permissions fixing.
+* **12.02.24:** - Use universal hardware acceleration blurb.
 * **12.09.23:** - Take ownership of plugin directories.
 * **04.07.23:** - Deprecate armhf. As announced [here](https://www.linuxserver.io/blog/a-farewell-to-arm-hf)
 * **07.12.22:** - Rebase master to Jammy, migrate to s6v3.
