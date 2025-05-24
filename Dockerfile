@@ -13,6 +13,8 @@ LABEL maintainer="chukysoria"
 # environment settings
 ARG DEBIAN_FRONTEND="noninteractive"
 ENV NVIDIA_DRIVER_CAPABILITIES="compute,video,utility"
+# https://github.com/dlemstra/Magick.NET/issues/707#issuecomment-785351620
+ENV MALLOC_TRIM_THRESHOLD_=131072
 
 RUN <<DOCKER_RUN
   echo "**** install jellyfin repo*****"
