@@ -6,7 +6,7 @@ FROM ${BUILD_FROM}
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_VERSION
-ARG BUILD_EXT_RELEASE="10.11.8+ubu2404"
+ARG BUILD_EXT_RELEASE="10.11.8+ubu2604"
 LABEL build_version="Chukyserver.io version:- ${BUILD_VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="chukysoria"
 
@@ -36,16 +36,12 @@ RUN \
   echo "**** Instaling common packages ****"  && \
   apt-get update && \
   apt-get install -y --no-install-recommends \
-    at=3.2.5-2.1ubuntu3 \
+    at=3.2.5-2.2ubuntu2 \
     jellyfin=${BUILD_EXT_RELEASE} \
     xmlstarlet=1.6.1-5build1 && \
-  if [ "${BUILD_ARCH}" = "aarch64" ] || [ "${BUILD_ARCH}" = "armv7" ]; then \
-    echo "**** Instaling ARM packages ****"  && \
-    apt-get install -y --no-install-recommends \
-      libomxil-bellagio0=0.9.3-8ubuntu2 \
-      libomxil-bellagio-bin=0.9.3-8ubuntu2 \
-      libraspberrypi0 \
-      ; \
+  if [ "${BUILD_ARCH}" = "aarch64" ]; then \
+    echo "**** Instaling ARM packages ****" \
+    ; \
   else \
     echo "**** Instaling AMD64 packages ****"  && \
     apt-get install -y --no-install-recommends \
