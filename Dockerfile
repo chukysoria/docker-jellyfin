@@ -40,7 +40,8 @@ RUN \
     jellyfin=${BUILD_EXT_RELEASE} \
     xmlstarlet=1.6.1-5build1 && \
   if [ "${BUILD_ARCH}" = "aarch64" ]; then \
-    echo "**** Instaling ARM packages ****"  && \
+    echo "**** Instaling ARM packages ****" \
+    ; \
   else \
     echo "**** Instaling AMD64 packages ****"  && \
     apt-get install -y --no-install-recommends \
