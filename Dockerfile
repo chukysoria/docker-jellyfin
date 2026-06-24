@@ -36,7 +36,7 @@ RUN \
   echo "**** Instaling common packages ****"  && \
   apt-get update && \
   apt-get install -y --no-install-recommends \
-    at=3.2.5-2.1ubuntu3 \
+    at=3.2.5-2.2ubuntu2 \
     jellyfin=${BUILD_EXT_RELEASE} \
     xmlstarlet=1.6.1-4 && \
   if [ "${BUILD_ARCH}" = "aarch64" ] || [ "${BUILD_ARCH}" = "armv7" ]; then \
