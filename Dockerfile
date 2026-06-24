@@ -39,11 +39,8 @@ RUN \
     at=3.2.5-2.2ubuntu2 \
     jellyfin=${BUILD_EXT_RELEASE} \
     xmlstarlet=1.6.1-5build1 && \
-  if [ "${BUILD_ARCH}" = "aarch64" ] || [ "${BUILD_ARCH}" = "armv7" ]; then \
+  if [ "${BUILD_ARCH}" = "aarch64" ]; then \
     echo "**** Instaling ARM packages ****"  && \
-    apt-get install -y --no-install-recommends \
-      libraspberrypi0 \
-      ; \
   else \
     echo "**** Instaling AMD64 packages ****"  && \
     apt-get install -y --no-install-recommends \
