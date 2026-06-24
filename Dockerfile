@@ -38,7 +38,7 @@ RUN \
   apt-get install -y --no-install-recommends \
     at=3.2.5-2.1ubuntu3 \
     jellyfin=${BUILD_EXT_RELEASE} \
-    xmlstarlet=1.6.1-4 && \
+    xmlstarlet=1.6.1-5build1 && \
   if [ "${BUILD_ARCH}" = "aarch64" ] || [ "${BUILD_ARCH}" = "armv7" ]; then \
     echo "**** Instaling ARM packages ****"  && \
     apt-get install -y --no-install-recommends \
