@@ -1,4 +1,4 @@
 ---
 build_from:
-  aarch64: ghcr.io/chukysoria/baseimage-ubuntu:v1.0.6
-  x86_64: ghcr.io/chukysoria/baseimage-ubuntu:v1.0.6
+  aarch64: ghcr.io/chukysoria/baseimage-ubuntu:v1.0.6@sha256:1fff9114707de1639a76b35b1067748d3935b60f55009a6be3cb1ea80c505423
+  x86_64: ghcr.io/chukysoria/baseimage-ubuntu:v1.0.6@sha256:1fff9114707de1639a76b35b1067748d3935b60f55009a6be3cb1ea80c505423
