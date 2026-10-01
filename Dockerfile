@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32
+# syntax=docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
 ARG BUILD_FROM=ghcr.io/chukysoria/baseimage-ubuntu:v1.0.9-resolute@sha256:a10f86c2c9522b3f6ce6ead29a7836f1918b1434be86b88e4333a5ace71d9c7e
 FROM ${BUILD_FROM} 
 
